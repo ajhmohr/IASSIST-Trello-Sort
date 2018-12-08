@@ -45,7 +45,7 @@ params$token <- paste0('token=',token)
 params$key <- paste0('key=', key)
 params$defaultlists <- paste0('defaultLists=', 'false')
 
-#compiles request (only have to do this 1 time - uncomment and run)
+## compiles request (only have to do this 1 time - uncomment and run)
 # newboard <- POST(paste0(url_base, "?", paste(unlist(params), collapse='&')))
 # stop_for_status(newboard)
 
@@ -129,47 +129,47 @@ params$idBoard <- paste0('idBoard=', boardid)
 ## Include all authors in card description
 ## Add the scores to the descriptions
 ## Include reviewer comments
-## Add certain labels? such as panel
-## Add notes from reviewers that were recommended to move to poster
-## Numer the columns to match word document
+## Include reviewer suggest sessions
+## Include label for panels
+
 # for (i in levels(factor(allsubs$SUBMISSION.ID))) {
 #   #create temp subset of data for that submission ID
 #   temp <- subset(allsubs, allsubs$SUBMISSION.ID==i)
-#   
+# 
 #   #Determine card's list based on initial topic
 #   params$list <- paste0('idList=', listdata$id[which(listdata$name == temp$InitialList[1])])
 #   #Name the card based on session number and title
 #   params$name <- paste0('name=', paste(temp$SUBMISSION.ID[1], URLencode(temp$TITLE[1], reserved = TRUE), sep=":%20"))
-#   
+# 
 #   #Add description - all authors and abstract; reveiwer ratings and comments
 #   authors <- temp[1,grep("AUTHOR.[[:digit:]].LAST.NAME", names(temp))]
 #   authorlist <- paste(authors[,which(authors!="")], collapse=";")
-#   
+# 
 #   #average rating
 #   rating <- temp$SCORE[1]
-#   
+# 
 #   #text of reviewer comments
 #   reviews <- subset(temp, temp$REVIEW.COMPLETED..TRUE.FALSE.=="TRUE")
 #   reviewercomments <- paste(reviews$PC.COMMENTS[which(reviews$PC.COMMENTS!="")], collapse="; ")
-#   
+# 
 #   #reviewer suggested topics
 #   revieweralltopics <- reviews[,grep("ADDITIONAL.SESSION.TOPIC", names(reviews))]
 #   reviewertopics <- paste(unique(revieweralltopics[revieweralltopics!=""]), collapse="; ")
-#   
+# 
 #   #review suggested sessions
 #   reviewersession <- unique(gsub("\n", "", unlist(strsplit(reviews$APPROPRIATE.SESSION, "\n    - "))))
-#   
+# 
 #   #add Panel label if submitted as such
-#   label <- ifelse("Panel" %in% temp$SUBMISSION.TYPE, labeldata$id[which(labeldata$name=="Panel")], "")
-#   
-#   params$desc <- paste0('desc=', "Rating:%20", "%0A%0A", URLencode(as.character(rating)), "Authors:%20", URLencode(authorlist), "%0A%0A", URLencode(temp$ABSTRACT[1], reserved = TRUE),"%0A%0A", "Reviewer%20Comments:%20", URLencode(reviewercomments), "%0A%0A", "Reviewer%20Topics:%20", URLencode(reviewertopics), "%0A%0A", "Reviewer%20Session:%20", URLencode(reviewersession))
-#   
-#   params$label <- paste0('label=', label)
-#   
+#   label <- ifelse(grepl("Panel", temp$SUBMISSION.TYPE[1]), labeldata$id[which(labeldata$name=="Panel")], "")
+# 
+#   params$desc <- paste0('desc=', "Rating:%20", URLencode(as.character(rating)), "%0A%0A",  "Authors:%20", URLencode(authorlist), "%0A%0A", URLencode(temp$ABSTRACT[1], reserved = TRUE),"%0A%0A", "Reviewer%20Comments:%20", URLencode(reviewercomments), "%0A%0A", "Reviewer%20Topics:%20", URLencode(reviewertopics), "%0A%0A", "Reviewer%20Session:%20", URLencode(reviewersession))
+# 
+#   params$label <- paste0('idLabels=', label)
+# 
 #   if (label == "") {
 #     params[[which(names(params)=="label")]] <- NULL
 #   }
-#   
+# 
 #     stop_for_status(POST(paste0(url_base, "?", paste(unlist(params), collapse='&'))))
 # }
 
