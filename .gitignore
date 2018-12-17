@@ -9,3 +9,6 @@
 
 #Ignore data files
 data/*
+
+#Ignore board backups
+board_backup/*

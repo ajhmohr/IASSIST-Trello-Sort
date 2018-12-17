@@ -10,15 +10,13 @@ p_load("rjson", "dplyr", "jsonlite", "httr", "readxl", "tidyr", "reshape2")
 #I save this information in an R script that I source below to read in each of these values
 source('~/UnsyncedDocuments/API_reference/trello_token.R', chdir = TRUE)
 
-#setwd
-setwd("~/Documents/Conferences/IASSIST_2018/sorting")
 
 
 ###########################
 # Pull down board  ########
 ###########################
 
-name <- "IASSIST_2018_Sorting V4"
+name <- "IASSIST_2019_Sorting"
 
 #first retrieve ID of new board for reference
 params <- list() 
@@ -76,11 +74,11 @@ for (i in 1:nrow(labels)) {
 }
 
 #remove GIS and REVIEW label
-data$labels <- gsub("REVIEW|GIS|; ", "", data$labels)
+#data$labels <- gsub("REVIEW|GIS|; ", "", data$labels)
 
 
 data1 <- subset(data, select=c("listname", "SubID","labels", "name", "desc"))
-write.csv(data1, file=paste0("Pulled_Trello_State", gsub("-", "", Sys.Date()), ".csv"), row.names=FALSE)
+write.csv(data1, file=paste0("board_backup/Pulled_Trello_State", gsub("-", "", Sys.Date()), ".csv"), row.names=FALSE)
 
 ###############################
 # check that they are all here
